@@ -1,3 +1,4 @@
+import './global.css';
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, SafeAreaView, Platform, StatusBar as RNStatusBar, Image, Pressable, ActivityIndicator, Modal, Button } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
@@ -68,8 +69,8 @@ export default function App() {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <View style={styles.container}>
+    <SafeAreaView className="flex-1 bg-gray-100">
+      <View className="flex-1 w-full max-w-[600px] self-center px-4">
         <View style={styles.headerContainer}>
           {logoError ? (
             <Text style={styles.header}>Gerenciador de Tarefas</Text>
@@ -270,18 +271,6 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: globalStyles.backgroundColor,
-    paddingTop: Platform.OS === 'android' ? RNStatusBar.currentHeight : 0,
-  },
-  container: {
-    flex: 1,
-    maxWidth: 600,
-    width: '100%',
-    alignSelf: 'center',
-    paddingHorizontal: 16,
-  },
   headerContainer: {
     alignItems: 'center',
     marginTop: 16,
