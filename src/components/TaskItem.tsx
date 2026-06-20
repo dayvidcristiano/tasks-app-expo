@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { Feather, AntDesign } from '@expo/vector-icons';
 import { TaskItem as TaskType } from '../utils/handle-api';
 
@@ -10,75 +10,31 @@ interface TaskItemProps {
   deleteTask: () => void;
 }
 
-// TODO (Zustand): Importe o useTaskStore e pegue as actions de atualizar e deletar diretamente da store
 const TaskItem: React.FC<TaskItemProps> = ({ task, updateMode, deleteTask }) => {
   const isOverdue = task.dueDate && new Date(task.dueDate) < new Date(new Date().setHours(0, 0, 0, 0));
 
   return (
-    <View style={styles.task}>
-      <View style={styles.contentContainer}>
-        <Text style={[styles.text, !!task.completed && styles.textCompleted]}>
+    <View className="flex-row items-center justify-between bg-white rounded-xl p-4 mt-3 shadow-sm shadow-black/20 elevation-2">
+      <View className="flex-1 mr-3">
+        <Text className={`text-base text-gray-900 ${task.completed ? 'line-through text-gray-400' : ''}`}>
           {task.text}
         </Text>
         {task.dueDate && (
-          <Text style={[styles.dateText, isOverdue ? styles.dateOverdue : styles.dateOnTime]}>
+          <Text className={`text-xs font-bold mt-1 ${isOverdue ? 'text-red-600' : 'text-green-600'}`}>
             Até: {new Date(task.dueDate).toLocaleDateString()}
           </Text>
         )}
       </View>
-      <View style={styles.icons}>
+      <View className="flex-row items-center gap-4">
         <TouchableOpacity onPress={updateMode} accessibilityRole="button">
-          <Feather name="edit" size={20} color="#fff" style={styles.icon} />
+          <Feather name="edit" size={20} color="#000" style={{ padding: 2 }} />
         </TouchableOpacity>
         <TouchableOpacity onPress={deleteTask} accessibilityRole="button">
-          <AntDesign name="delete" size={20} color="#fff" style={styles.icon} />
+          <AntDesign name="delete" size={20} color="#e53935" style={{ padding: 2 }} />
         </TouchableOpacity>
       </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  task: {
-    backgroundColor: '#000',
-    paddingVertical: 14,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-    marginTop: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  contentContainer: {
-    flex: 1,
-    marginRight: 10,
-  },
-  text: {
-    color: '#fff',
-    fontSize: 16,
-  },
-  textCompleted: {
-    textDecorationLine: 'line-through',
-    color: '#aaa',
-  },
-  dateText: {
-    fontSize: 12,
-    marginTop: 4,
-    fontWeight: 'bold',
-  },
-  dateOverdue: {
-    color: '#e53935',
-  },
-  dateOnTime: {
-    color: '#43a047',
-  },
-  icons: {
-    flexDirection: 'row',
-    gap: 16,
-  },
-  icon: {
-    padding: 2,
-  },
-});
 
 export default TaskItem;
