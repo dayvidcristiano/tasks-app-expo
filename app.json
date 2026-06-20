@@ -25,12 +25,15 @@
       },
       "predictiveBackGestureEnabled": false
     },
-     "web": {
+    "web": {
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
     },
     "plugins": [
       "@react-native-community/datetimepicker"
-    ]
+    ],
+    "experiments": {
+      "tsconfigPaths": true
+    }
   }
 }
